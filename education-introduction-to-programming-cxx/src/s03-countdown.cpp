@@ -1,28 +1,19 @@
-#include <iostream>
-#include <string>
 #include <unistd.h>
 
-auto askForInteger(std::string prompt) -> int
+#include <iostream>
+#include <string>
+
+
+auto main(int, char* argv[]) -> int
 {
-	std::cout << prompt;
-	auto n = std::string{};
-	std::getline(std::cin, n);
+    auto const number = std::stoi(argv[1]);
+    std::cout << "Your integer is: " << number << std::endl;
+    std::cout << "Countdown is starting!\n";
 
-	return std::stoi(n);
-}
+    for (auto i = number; i >= 0; --i) {
+        usleep(200000);
+        std::cout << i << std::endl;
+    }
 
-
-auto main() -> int
-{
-	auto const a = askForInteger("Enter your integer: ");
-	std::cout << "Your integer is: " << a << std::endl;
-	std::cout << "Countdown is starting!\n";
-
-	for(auto i = a; i >= 0; --i)
-	{
-		usleep(200000);
-		std::cout << i << std::endl;
-	}
-
-	return 0;
+    return 0;
 }

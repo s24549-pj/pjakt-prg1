@@ -1,37 +1,32 @@
-#include <iostream>
-#include <string>
 #include <cstdlib>
-#include <time.h>
-
-int number; int guess;
+#include <iostream>
+#include <random>
+#include <string>
 
 
 auto main() -> int
 {
-	srand(time(NULL));
-	number = rand()%100+1;
+    int guess;
 
-	std::cout << "The number 1..100 was randomly generated\n";
+    auto rd     = std::random_device{};
+    auto d      = std::uniform_int_distribution<int>{1, 100};
+    auto number = d(rd);
 
-	while(guess != number)
-	{
-		std::cout << "Enter your guess: ";
-		std::cin >> guess;
-		//std::cout << std::endl;
+    std::cout << "The number 1..100 was randomly generated\n";
 
-		if(guess == number)
-		{
-			std::cout << "Congratulations! You've guessed the number!\n";
-		}
-		else if(guess < number)
-		{
-			std::cout << "Number too low\n";
-		}
-		else if(guess > number)
-		{
-			std::cout << "Number too big\n";
-		}
-	}
+    while (guess != number) {
+        std::cout << "Enter your guess: ";
+        std::cin >> guess;
+        // std::cout << std::endl;
 
-	return 0;
+        if (guess == number) {
+            std::cout << "Congratulations! You've guessed the number!\n";
+        } else if (guess < number) {
+            std::cout << "Number too low\n";
+        } else if (guess > number) {
+            std::cout << "Number too big\n";
+        }
+    }
+
+    return 0;
 }

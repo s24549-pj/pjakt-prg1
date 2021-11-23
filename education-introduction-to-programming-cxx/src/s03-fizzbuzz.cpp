@@ -1,39 +1,25 @@
 #include <iostream>
 #include <string>
 
-auto getInt(std::string prompt) -> int
+
+auto main(int, char* argv[]) -> int
 {
-	std::cout << prompt;
-	auto n = std::string{};
-	std::getline(std::cin, n);
+    auto liczba = std::stoi(argv[1]);
 
-	return std::stoi(n);
-}
+    for (auto i = 1; i <= liczba; i++) {
+        std::cout << i << " ";
 
-auto main() -> int
-{
-	auto const intA = getInt("Enter your number: ");
+        if (i % 3 == 0) {
+            std::cout << "Fizz";
+        }
+        if (i % 5 == 0) {
+            std::cout << "Buzz";
+        }
 
-	for(auto i = 1; i <= intA; i++)
-	{
-		std::cout << i << " ";
+        std::cout << std::endl;
+    }
 
-		if(i%3 == 0 && i%5 == 0)
-		{
-			std::cout << "FizzBuzz";
-		}
-		else if(i%3 == 0)
-		{
-			std::cout << "Fizz";
-		}
-		else if(i%5 == 0)
-		{
-			std::cout << "Buzz";
-		}
+    std::cout << "\n";
 
-		
-		std::cout << std::endl;
-	}
-
-	return 0;
+    return 0;
 }

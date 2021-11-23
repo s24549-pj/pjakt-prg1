@@ -1,27 +1,22 @@
 #include <iostream>
 #include <string>
 
-auto n = std::string{};
 
-auto userInput(std::string prompt) -> int
+auto main(int argc, char* argv[]) -> int
 {
-    std::cout << prompt;
-    std::getline(std::cin, n);
-    if (n.empty()) {
-        n = "99";
+    auto beerNumber = 99;
+
+
+    if (argc > 1) {
+        beerNumber = std::stoi(argv[1]);
+    }
+    if (beerNumber <= 0) {
+        std::cout << "There's no bottles of beer." << std::endl;
+
+        return 1;
     }
 
-    return stoi(n);
-}
-
-
-auto main() -> int
-{
-    userInput("Enter integer (this is optional): ");
-
-    int a = stoi(n);
-
-    for (int i = a; i >= 0; i--) {
+    for (int i = beerNumber; i >= 0; i--) {
         if (i > 0) {
             std::cout << i << " bottles of beer on the wall, " << i
                       << " bottles of beer. \n";
@@ -30,7 +25,7 @@ auto main() -> int
         } else if (i == 0) {
             std::cout << "No more bottles of beer on the wall, no more bottles "
                          "of beer.\n";
-            std::cout << "Go to the store and buy some more, " << a
+            std::cout << "Go to the store and buy some more, " << beerNumber
                       << " bottles of beer on the wall...\n";
         }
     }

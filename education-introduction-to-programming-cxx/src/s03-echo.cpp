@@ -1,98 +1,54 @@
-#include <bits/stdc++.h>
-
 #include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
-std::string lineFlag    = "-l";
-std::string reverseFlag = "-r";
-std::string toUpperFlag = "-u";
-std::string noEndl      = "-n";
-int itr                 = 0;
-
-// auto main() -> int
 
 auto main(int argc, char* argv[]) -> int
 {
-    auto args = std::vector<std::string>{};
-    std::copy_n(argv, argc, std::back_inserter(args));
-
-    auto userInput = std::string{};
-    userInput      = argv[1];
-
-    int const a = userInput.length();
-
-    std::vector<char> charVector(a);
-    std::copy(userInput.begin(), userInput.end(), charVector.begin());
-
-
-    for (int i = 0; i <= a; i++) {
-        std::cout << charVector[i] << " ";
+    if (argc == 1) {
+        return 0;
     }
-    // std::cout << std::endl;  //zakomentowalem std::endl zeby na koncu
-    // programu wykorzystac flage noEndl "-n"
 
-    for (auto const& eachString : args) {
-        itr++;
+    auto separator     = " ";
+    auto reverse       = false;
+    auto finishNewLine = true;
 
-        std::size_t foundLineFlag = eachString.find(lineFlag);
+    auto flagSeparator = std::string{"-l"};
+    auto flagReverse   = std::string{"-r"};
+    auto flagFinish    = std::string{"-n"};
 
-        if (foundLineFlag != std::string::npos) {
-            std::cout << std::endl;  // dodaje std::endl zeby lineFlag wykonac
-                                     // od nowej linii, pomimo tego i pomimo
-                                     // ponizszego "if" przy fladze "-l" na
-                                     // koncu dostaje dodatkowy std::endl - nie
-                                     // wiem skad sie bierze
-            for (int i = 0; i <= a; i++) {
-                if (i < (a - 1)) {
-                    std::cout << charVector[i] << "\n";
-                    std::cout << std::endl;
-                } else {
-                    std::cout << charVector[i];
-                }
+    auto toPrint = std::vector<std::string>{};
+    {
+        auto i = 1;
+        for (; i < argc; i++) {
+            if (argv[i] == flagSeparator) {
+                separator = "\n";
+            } else if (argv[i] == flagReverse) {
+                reverse = true;
+            } else if (argv[i] == flagFinish) {
+                finishNewLine = false;
+            } else {
+                break;
             }
         }
-
-        std::size_t foundToUpperFlag = eachString.find(toUpperFlag);
-
-        if (foundToUpperFlag != std::string::npos) {
-            std::cout << std::endl;  // dodaje std::endl zeby toUpperFlag
-                                     // wykonac od nowej linii
-
-            for (int i = 0; i <= a; i++) {
-                charVector[i] = toupper(charVector[i]);
-                std::cout << charVector[i];
-                std::cout << " ";
-            }
-
-            for (int i = 0; i <= a; i++) {
-                charVector[i] = tolower(charVector[i]);  // powracam do malych
-                                                         // liter w charVector
-            }
-        }
-
-        std::size_t foundReverseFlag = eachString.find(reverseFlag);
-
-        if (foundReverseFlag != std::string::npos) {
-            std::reverse(charVector.begin(), charVector.end());
-
-            std::cout << std::endl;  // dodaje std::endl zeby reverseFlag
-                                     // wykonac od nowej linii
-
-            for (int i = 0; i <= a; i++) {
-                std::cout << charVector[i];
-                std::cout << " ";
-            }
-            std::reverse(charVector.begin(),
-                         charVector.end());  // powracam do pierotnej kolejnosci
-                                             // liter w charVector
-        }
-
-        if (eachString != noEndl && itr == (int)args.size()) {
-            std::cout << "\n";
-        }
+        std::copy(argv + i, argv + argc, std::back_inserter(toPrint));
     }
+
+    if (reverse) {
+        std::reverse(toPrint.begin(), toPrint.end());
+    }
+
+    std::cout << toPrint[0];
+    using size_type = decltype(toPrint)::size_type;
+    for (auto j = size_type{1}; j < toPrint.size(); j++) {
+        std::cout << separator << toPrint[j];
+    }
+
+    if (finishNewLine) {
+        std::cout << "\n";
+    }
+
 
     return 0;
 }

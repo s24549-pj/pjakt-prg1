@@ -2,24 +2,20 @@
 #include <string>
 
 
-auto main() -> int
+auto main(int, char* argv[]) -> int
 {
-	std::cout << "Enter password: ";
-	auto password = std::string{};
-	std::getline(std::cin, password);
+    auto password = argv[1];
 
-	std::cout << password << "\n";
+    std::cout << password << "\n";
 
-	auto n = std::string{};
+    auto n = std::string{};
 
-	do
-	{
-	std::cout << "Enter password again: ";
-	std::getline(std::cin, n);
-	}
-	while(password != n);
+    do {
+        std::cout << "Enter password again: ";
+        std::getline(std::cin, n);
+    } while (password != n);
 
-	std::cout << "Correct password\n";
+    std::cout << "Correct password\n";
 
-	return 0;
+    return 0;
 }
